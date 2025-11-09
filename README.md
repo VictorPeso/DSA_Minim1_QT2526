@@ -15,7 +15,7 @@ Veure la resolució dels tests efectuats al directori "CAPTURAS DE PANTALLA" amb
  - #### Clases
 
 | Clase   | Atributo          | Tipo     | Notas / Errores posibles |
-|---------|-----------------|---------|--------------------------|
+|:-------:|:---------------:|:-------:|:------------------------:|
 | Llibre  | id              | `string`  |                          |
 |         | isbn            | `string`  |                          |
 |         | titol           | `string`  |                          |
@@ -41,7 +41,7 @@ Veure la resolució dels tests efectuats al directori "CAPTURAS DE PANTALLA" amb
  - #### Implementació
 
 | Atributo      | Tipo                     | Notas |
-|---------------|-------------------------|-------|
+|:-------------:|:-----------------------:|:-----:|
 | munt          | `Stack<Llibre>`         |       |
 | biblio        | `List<Stack<Llibre>>`   |       |
 | lectors       | `List<Lector>`          |       |
