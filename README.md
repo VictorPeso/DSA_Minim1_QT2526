@@ -6,8 +6,7 @@ Funcionalitars requerides:
 |:-----:|:---:|:-----------|
 | ✅ |1|  Identificar les entitats d'informació i les seves propietats. Podeu fer una proposta bàsica de classes i d'atributs.|
 | ✅ |2| Especificació del component que implementarà les operacions descrites anteriorment: interfície Java.|
-| ✅ |3| Implementació d'una Façana (patró de disseny) que implementi la 
-interfície definida prèviament. |
+| ✅ |3| Implementació d'una Façana (patró de disseny) que implementi la interfície definida prèviament. |
 | ✅ |4| Implementació d'una prova (JUNIT) sobre el component desenvolupat. |
 
 Veure la resolució dels tests efectuats al directori "CAPTURAS DE PANTALLA" amb el nom "JUNITtest".
