@@ -38,13 +38,11 @@ Veure la resolució dels tests efectuats al directori "CAPTURAS DE PANTALLA" amb
 |         | data_devolucio  | string  |                          |
 |         | estat           | string  | #En tramit; tornat       |
 
-tornat<br>ERROR: No hi han exemplars<br>ERROR: No existeix el llibre/lector
-
 #### Implementació
 
 | Atributo      | Tipo                             | Notas |
 |---------------|---------------------------------|-------|
-| munt          | Stack<Llibre>                   |       |
+| munt          | "Stack<Llibre>"                   |       |
 | biblio        | List<Stack<Llibre>>             |       |
 | lectors       | List<Lector>                     |       |
 | catalog       | List<Llibre>                     |       |
