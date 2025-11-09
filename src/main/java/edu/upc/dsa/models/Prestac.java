@@ -25,6 +25,11 @@ public class Prestac {
         this.setEstat("En tràmit");
     }
 
+    @Override
+    public String toString() {
+        return "Prestec [ID = " + id + ", Lector (ID) = " + id_lector + ", Llibre (ID) = " + id_llibre + ", Data del prestec = " + data_prestac + ", Data devolució = " + data_devolucio + ", Estat = " + estat + "]";
+    }
+
     public String getId() {
         return id;
     }

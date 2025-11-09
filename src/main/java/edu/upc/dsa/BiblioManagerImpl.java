@@ -8,14 +8,15 @@ import edu.upc.dsa.models.Llibre;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.Stack;
 
 import edu.upc.dsa.models.Prestac;
 import org.apache.log4j.Logger;
 
 public class BiblioManagerImpl implements BiblioManager {
     private static BiblioManager instance;
-    protected Queue<Llibre> munt;
-    protected List<Queue<Llibre>> biblio;
+    protected Stack<Llibre> munt;
+    protected List<Stack<Llibre>> biblio;
     protected List<Llibre> catalog;
     protected List<Lector> lectors;
     protected List<Prestac> registre;
@@ -25,7 +26,7 @@ public class BiblioManagerImpl implements BiblioManager {
     private BiblioManagerImpl() {
         this.biblio = new LinkedList<>();
         this.lectors = new LinkedList<>();
-        this.munt = new LinkedList<>();
+        this.munt = new Stack<>();
         this.catalog = new LinkedList<>();
         this.registre = new LinkedList<>();
     }
@@ -35,27 +36,6 @@ public class BiblioManagerImpl implements BiblioManager {
         return instance;
     }
 
-    public int size() {
-        int ret = this.munt.size();
-        logger.info("size " + ret);
-
-        return ret;
-    }
-
-    public int size2() {
-        int ret = this.catalog.size();
-        logger.info("size catalog " + ret);
-
-        return ret;
-    }
-    public int size3() {
-        int ret = this.registre.size();
-        logger.info("size catalog " + ret);
-
-        return ret;
-    }
-
-
     public Lector addLector(String id, String nom, String cognoms, String dni, String birthdate, String direccio){
         Lector l = new Lector(id, nom, cognoms, dni, birthdate, direccio);
         this.lectors.add(l);
@@ -64,41 +44,49 @@ public class BiblioManagerImpl implements BiblioManager {
     }
 
     public Llibre addLlibre(String id, String isbn, String title, String autor, String editorial, String any_publicacio, String tematica, String num_edicio) {
+        Stack<Llibre> munt_complert;
         Llibre l = new Llibre(id, isbn, title, autor, editorial, any_publicacio, tematica, num_edicio);
         if (munt.size() == 9) {
-            this.munt.add(l);
-            this.biblio.add(munt);
+            this.munt.push(l);
+            munt_complert = (Stack<Llibre>) this.munt.clone();
+            this.biblio.add(munt_complert);
             this.munt.clear();
             logger.info("LLIBRE NOU: " + l);
             logger.info(" ------- S'enmagatzema el munt -------");
         }
         else {
-            this.munt.add(l);
+            this.munt.push(l);
             logger.info("LLIBRE NOU: " + l);
         }
         return l;
     }
 
-    public void saveLlibre() throws EmptyBookListException {
+    private void catalogar_munt(Stack<Llibre> m) {
         boolean found = false;
-        for (Queue<Llibre> m : this.biblio) {
-            while (!m.isEmpty()) {
-                Llibre llibre = m.poll();
-                found = false;
-                for (Llibre l : this.catalog) {
-                    if (l.getIsbn().equals(llibre.getIsbn())) {
-                        int n = l.getExemplars() + 1;
-                        l.setExemplars(n);
-                        logger.info("Augment a " + n + " exemplars del Llibre: " + llibre);
-                        found = true;
-                    }
-                }
-                if (!found) {
-                    this.catalog.add(llibre);
-                    logger.info("LLIBRE ENRREGISTRAT: " + llibre);
+        while (!m.isEmpty()) {
+            Llibre llibre = m.peek();
+            found = false;
+            for (Llibre l : this.catalog) {
+                if (l.getIsbn().equals(llibre.getIsbn())) {
+                    int n = l.getExemplars() + 1;
+                    l.setExemplars(n);
+                    logger.info("Augment a " + n + " exemplars del Llibre: " + llibre);
+                    found = true;
                 }
             }
+            if (!found) {
+                this.catalog.add(llibre);
+                logger.info("LLIBRE ENRREGISTRAT: " + llibre);
+            }
+            m.pop();
         }
+    }
+
+    public void saveLlibre() throws EmptyBookListException {
+        for (Stack<Llibre> m : this.biblio) {
+            catalogar_munt(m);
+        }
+        catalogar_munt(this.munt);
         logger.info("S'ha acabat d'enrregistrar els llibres");
         throw new EmptyBookListException("Fi de l'enrregistrament");
     }
@@ -107,34 +95,43 @@ public class BiblioManagerImpl implements BiblioManager {
         Prestac p = new Prestac(id, lector, llibre, data_prestac, data_devolucio);
         boolean found_lec = false;
         boolean found_llibre_available = false;
-        for (Lector l : this.lectors) {
-            if (l.getId().equals(lector)) {
+
+        int lec_count = 0;
+        int llib_count = 0;
+
+        while (!found_lec && lec_count < this.lectors.size()) {
+            if (this.lectors.get(lec_count).getId().equals(lector)) {
                 found_lec = true;
-            }
-        }
-        for (Llibre l : this.catalog) {
-            if (l.getId().equals(llibre)) {
-                if (l.getExemplars() >= 1) {
-                    found_llibre_available = true;
+
+                while (!found_llibre_available && llib_count < this.catalog.size()) {
+                    if (this.catalog.get(llib_count).getId().equals(llibre)) {
+                        if (this.catalog.get(llib_count).getExemplars() >= 1) {
+                            found_llibre_available = true;
+                            int num = this.catalog.get(llib_count).getExemplars() - 1;
+                            this.catalog.get(llib_count).setExemplars(num);
+                            this.registre.add(p);
+                            logger.info("PRESTAC NOU: " + p);
+                            return p;
+                        }
+                    }
+                    llib_count = llib_count + 1;
                 }
             }
+            lec_count = lec_count + 1;
         }
-        if (found_lec && found_llibre_available) {
-            this.registre.add(p);
-            logger.info("PRESTAC NOU: " + p);
-            return p;
+
+        if (!found_lec) {
+            logger.info("ERROR: Lector no enregistrat.");
+            p = null;
+            throw new CantDoPrestacException("Lector no enregistrat.");
         }
-        else {
-            if (!found_lec) {
-                logger.info("ERROR: Lector no enregistrat.");
-                throw new CantDoPrestacException("Lector no enregistrat.");
-            }
-            if (!found_llibre_available) {
-                logger.info("ERROR: Llibre no disponible.");
-                throw new CantDoPrestacException("Llibre no disponible.");
-            }
-            return null;
+        if (!found_llibre_available) {
+            logger.info("ERROR: Llibre no disponible.");
+            p = null;
+            throw new CantDoPrestacException("Llibre no disponible.");
         }
+
+        return p;
     }
 
     public List<Prestac> getLLibresByUser(Lector lec) {
@@ -154,6 +151,44 @@ public class BiblioManagerImpl implements BiblioManager {
         this.catalog.clear();
         this.lectors.clear();
         this.registre.clear();
+    }
+
+    public int size_munt() {
+        int ret = this.munt.size();
+        logger.info("Mida del munt actual: " + ret);
+        return ret;
+    }
+
+    public int size_biblio() {
+        int ret = this.biblio.size();
+        logger.info("Munts complerts: " + ret);
+        return ret;
+    }
+
+    public int size_catalog() {
+        int ret = this.catalog.size();
+        logger.info("Mida del cataleg: " + ret);
+        return ret;
+    }
+
+    public int size_registre() {
+        int ret = this.registre.size();
+        logger.info("Mida del registre: " + ret);
+        return ret;
+    }
+
+    public int size_lectors() {
+        int ret = this.lectors.size();
+        logger.info("Nombre de lectors: " + ret);
+        return ret;
+    }
+
+    public List<Llibre> get_catalog() {
+        return this.catalog;
+    }
+
+    public List<Lector> get_lectors() {
+        return this.lectors;
     }
 
 //    public Llibre addTrack(Llibre t) {

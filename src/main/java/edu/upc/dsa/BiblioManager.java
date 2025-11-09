@@ -7,6 +7,7 @@ import edu.upc.dsa.models.Llibre;
 import edu.upc.dsa.models.Prestac;
 
 import java.util.List;
+import java.util.Stack;
 
 public interface BiblioManager {
 
@@ -31,7 +32,11 @@ public interface BiblioManager {
 //    public Llibre updateTrack(Llibre t);
 //
     public void clear();
-    public int size();
-    public int size2();
-    public int size3();
+    public int size_munt();
+    public int size_biblio();
+    public List<Llibre> get_catalog();
+    public int size_catalog();
+    public int size_registre();
+    public List<Lector> get_lectors();
+    public int size_lectors();
 }

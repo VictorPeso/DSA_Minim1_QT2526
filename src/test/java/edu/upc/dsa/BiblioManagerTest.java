@@ -1,22 +1,21 @@
 package edu.upc.dsa;
 
-import edu.upc.dsa.exceptions.CantDoPrestacException;
-import edu.upc.dsa.exceptions.EmptyBookListException;
-import edu.upc.dsa.models.Llibre;
 import edu.upc.dsa.models.Prestac;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.List;
+import org.apache.log4j.Logger;
+import edu.upc.dsa.exceptions.CantDoPrestacException;
+import edu.upc.dsa.exceptions.EmptyBookListException;
 
 public class BiblioManagerTest {
-    BiblioManager tm;
+    BiblioManager bm;
+    final static Logger logger = Logger.getLogger(BiblioManagerTest.class);
 
     @Before
     public void setUp() {
-        this.tm = BiblioManagerImpl.getInstance();
+        this.bm = BiblioManagerImpl.getInstance();
         String[][] booksData1 = {
                 {"JV7d", "The Steam House", "Forgotten Books", "First Edition", "1880", "978-1605062234", "Jules Verne", "Adventures"},
                 {"JV4a", "The Mysterious Island", "Barnes & Noble Classics", "First Edition", "1874", "978-1435149408", "Jules Verne", "Adventures"},
@@ -36,48 +35,128 @@ public class BiblioManagerTest {
                 {"JV7b", "The Steam House", "Forgotten Books", "First Edition", "1880", "978-1605062234", "Jules Verne", "Adventures"}
         };
         for (String[] vec: booksData1){
-            this.tm.addLlibre(vec[5], vec[0], vec[1], vec[6], vec[2], vec[4], vec[7], vec[3]);
+            this.bm.addLlibre(vec[0], vec[5], vec[1], vec[6], vec[2], vec[4], vec[7], vec[3]);
         }
-        this.tm.addLector("111", "Victor", "Peso Keyer", "45794453G", "08/05/2001", "Castelldefels");
+        this.bm.addLector("111", "Victor", "Peso Keyer", "45794453G", "08/05/2001", "Castelldefels");
     }
 
     @After
     public void tearDown() {
         // És un Singleton
-        this.tm.clear();
+        this.bm.clear();
+    }
+
+    @Test
+    public void addLectorTest() {
+        logger.info("******************************************");
+        logger.info("   ----- AFEGIR UN NOU LECTOR -----");
+
+        Assert.assertEquals(1, bm.size_lectors());
+
+        this.bm.addLector("112", "Marta", "Gonzalez Martinez", "47463829T", "11/11/2001", "Castelldefels");
+
+        Assert.assertEquals(2, bm.size_lectors());
+        logger.info("******************************************");
     }
 
     @Test
     public void addLlibreTest() {
-        Assert.assertEquals(5, tm.size());
+        logger.info("******************************************");
+        logger.info("   ----- EMMAGATZEMAR ELS LLIBRES -----");
 
-        this.tm.addLlibre("a", "a", "a", "a", "a", "a", "a", "a");
+        Assert.assertEquals(5, bm.size_munt());
+        Assert.assertEquals(1, bm.size_biblio());
 
-        Assert.assertEquals(6, tm.size());
+        // Afegim llibre doomy per probar si funciona.
+        this.bm.addLlibre("a", "a", "a", "a", "a", "a", "a", "a");
 
-        this.tm.addLlibre("a", "a", "a", "a", "a", "a", "a", "a");
-        this.tm.addLlibre("a", "a", "a", "a", "a", "a", "a", "a");
-        this.tm.addLlibre("a", "a", "a", "a", "a", "a", "a", "a");
-        this.tm.addLlibre("a", "a", "a", "a", "a", "a", "a", "a");
-        this.tm.addLlibre("a", "a", "a", "a", "a", "a", "a", "a");
+        Assert.assertEquals(6, bm.size_munt());
+        Assert.assertEquals(1, bm.size_biblio());
 
-        Assert.assertEquals(1, tm.size());
+        this.bm.addLlibre("a", "a", "a", "a", "a", "a", "a", "a");
+        this.bm.addLlibre("a", "a", "a", "a", "a", "a", "a", "a");
+        this.bm.addLlibre("a", "a", "a", "a", "a", "a", "a", "a");
+        this.bm.addLlibre("a", "a", "a", "a", "a", "a", "a", "a");
+        this.bm.addLlibre("a", "a", "a", "a", "a", "a", "a", "a");
+
+        Assert.assertEquals(1, bm.size_munt());
+        Assert.assertEquals(2, bm.size_biblio());
+
+        logger.info("******************************************");
     }
 
     @Test
-    public void saveLlibreTest() {
-        Assert.assertEquals(0, tm.size2());
+    public void saveLlibreTest() throws EmptyBookListException {
+        logger.info("******************************************");
+        logger.info("   ----- CATALOGAR ELS LLIBRES -----");
 
-        Assert.assertThrows(EmptyBookListException.class, () -> this.tm.saveLlibre());
+        Assert.assertEquals(0, bm.size_catalog());
 
-        Assert.assertEquals(8, tm.size2());
+        Assert.assertThrows(EmptyBookListException.class, () -> this.bm.saveLlibre());
+
+        // Hi han 8 llibres diferents, per tant el cataleg ha de tindre aqeusta dimensió.
+        Assert.assertEquals(8, bm.size_catalog());
+        // "Twenty Thousand Leagues Under the Sea" ha de tindre 3 exemplars.
+        Assert.assertEquals(3, bm.get_catalog().get(0).getExemplars());
+
+        logger.info("******************************************");
     }
 
     @Test
-    public void doPrestecTest() {
-        Assert.assertEquals(0, tm.size3());
-        Assert.assertThrows(CantDoPrestacException.class, () -> tm.doPrestac("1", "b", "a", "b", "b"));
-        Assert.assertThrows(CantDoPrestacException.class, () -> tm.doPrestac("1", "a", "a", "b", "b"));
-        Assert.assertEquals(1, tm.size3());
+    public void doPrestecTest() throws Exception {
+        logger.info("******************************************");
+        logger.info("   ----- PRESTAR UN LLIBRE -----");
+
+        logger.info(" -> Primer enregistrar els llibres:");
+        Assert.assertThrows(EmptyBookListException.class, () -> this.bm.saveLlibre());
+        Assert.assertEquals(0, bm.size_registre());
+        logger.info(("........................................."));
+
+        logger.info(" -> Intent de prestec correcte");
+        Assert.assertNotNull("Prestec efectuat correctament", this.bm.doPrestac("", "111", "JV5", "07/11/2025", "07/12/2025"));
+        Assert.assertEquals(1, bm.size_registre());
+        logger.info(("........................................."));
+
+        logger.info(" -> Intent amb Lector incorrecte");
+        Assert.assertThrows(CantDoPrestacException.class, () -> this.bm.doPrestac("0001", "000", "JV2c", "07/11/2025", "07/12/2025"));
+        Assert.assertEquals(1, bm.size_registre());
+        logger.info(("........................................."));
+
+        logger.info(" -> Intent amb ID Llibre incorrecte");
+        Assert.assertThrows(CantDoPrestacException.class, () -> this.bm.doPrestac("0001", "111", "JJJJ", "07/11/2025", "07/12/2025"));
+        Assert.assertEquals(1, bm.size_registre());
+        logger.info(("........................................."));
+
+        logger.info(" -> Intent amb Llibre exhaurit");
+        Assert.assertThrows(CantDoPrestacException.class, () -> this.bm.doPrestac("0001", "111", "JV5", "07/11/2025", "07/12/2025"));
+        Assert.assertEquals(1, bm.size_registre());
+        logger.info(("........................................."));
+
+        logger.info("******************************************");
+    }
+
+    @Test
+    public void getLLibresByUserTest() throws Exception{
+        logger.info("******************************************");
+        logger.info("   ----- CONSULTAR PRESTECS D'UN LECTOR -----");
+
+        logger.info(" -> Set up:");
+        this.bm.addLector("112", "Marta", "Gonzalez Martinez", "47463829T", "11/11/2001", "Castelldefels");
+        Assert.assertThrows(EmptyBookListException.class, () -> this.bm.saveLlibre());
+        Assert.assertNotNull("Prestec efectuat correctament", this.bm.doPrestac("", "111", "JV1", "07/11/2025", "07/12/2025"));
+        Assert.assertNotNull("Prestec efectuat correctament", this.bm.doPrestac("", "111", "JV3", "07/11/2025", "07/12/2025"));
+        Assert.assertNotNull("Prestec efectuat correctament", this.bm.doPrestac("", "111", "JV5", "07/11/2025", "07/12/2025"));
+        Assert.assertNotNull("Prestec efectuat correctament", this.bm.doPrestac("", "112", "JV8", "07/11/2025", "07/12/2025"));
+        logger.info(("........................................."));
+
+        logger.info(" -> Llibres de l'usuari 111:");
+        Assert.assertEquals(3, bm.getLLibresByUser(this.bm.get_lectors().get(0)).size());
+        logger.info(("........................................."));
+
+        logger.info(" -> Llibres de l'usuari 112:");
+        Assert.assertEquals(1, bm.getLLibresByUser(this.bm.get_lectors().get(1)).size());
+        logger.info(("........................................."));
+
+        logger.info("******************************************");
     }
 }
