@@ -12,7 +12,7 @@ Funcionalitars requerides:
 Veure la resolució dels tests efectuats al directori "CAPTURAS DE PANTALLA" amb el nom "JUNITtest".
 
 ### Proposta bàsica de classes i atributs:
-#### Clases
+ - #### Clases
 
 | Clase   | Atributo          | Tipo     | Notas / Errores posibles |
 |---------|-----------------|---------|--------------------------|
@@ -38,7 +38,7 @@ Veure la resolució dels tests efectuats al directori "CAPTURAS DE PANTALLA" amb
 |         | data_devolucio  | `string`  |                          |
 |         | estat           | `string`  | `En tramit` `Tornat`       |
 
-#### Implementació
+ - #### Implementació
 
 | Atributo      | Tipo                     | Notas |
 |---------------|-------------------------|-------|
