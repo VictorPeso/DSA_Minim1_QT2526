@@ -49,12 +49,24 @@ Veure la resolució dels tests efectuats al directori "CAPTURAS DE PANTALLA" amb
 | registre      | `List<Prestac>`         |       |
 ---
 ## `Part 2`
-- Implementados algunos metodos GET, POST, PUT en clase Service
+| Estat | Apartat | Descripció |
+|:-----:|:---:|:-----------|
+| ❌ |1| Definir servei, operacions, rutes, mètodes HTTP, peticions, respostes, codis de resposta |
+| ❌ |2| Implementar un servei REST que permeti realitzar les operacions especificades a la primera part de l'exercici. |
+
+---
+##### `Fitxers adjuunts`
+Totes les captures es troben dintre del directori "CAPTURAS DE PANTALLA"
+| Estat | Nom del fitxer | Descripció |
+|:------:|:-----:|:-----------|
+| ✅ | JUNITtest | Captura de pantalla amb l’execució del test JUNIT de la PART 1. |
+| ❌ | - | Captura de pantalla amb la consola de l’execució del servei REST. |
+| ❌ | - | Captura de pantalla amb l’execució de dues operaciones sobre swagger. |
 
 ---
 ##### `Llegenda`
 | Simbol | Descripció |
-|:------:|:------------|
+|:------:|:-----------|
 | ✅ | Correctament implementat y funcionant de forma intencional. |
 | ⚠️ | Parcialment ben implementat pero amb errors detectats. |
 | ❌ | No implementat o amb errors catastròfics. |
