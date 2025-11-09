@@ -40,13 +40,13 @@ Veure la resolució dels tests efectuats al directori "CAPTURAS DE PANTALLA" amb
 
 #### Implementació
 
-| Atributo      | Tipo                             | Notas |
-|---------------|---------------------------------|-------|
-| munt          | "Stack<Llibre>"                   |       |
-| biblio        | List<Stack<Llibre>>             |       |
-| lectors       | List<Lector>                     |       |
-| catalog       | List<Llibre>                     |       |
-| registre      | List<Prestac>                    |       |
+| Atributo      | Tipo                     | Notas |
+|---------------|-------------------------|-------|
+| munt          | `Stack<Llibre>`         |       |
+| biblio        | `List<Stack<Llibre>>`   |       |
+| lectors       | `List<Lector>`          |       |
+| catalog       | `List<Llibre>`          |       |
+| registre      | `List<Prestac>`         |       |
 ---
 ## `Part 2`
 - Implementados algunos metodos GET, POST, PUT en clase Service
