@@ -11,7 +11,8 @@ Funcionalitars requerides:
 ## `Parte 2`
 - Implementados algunos metodos GET, POST, PUT en clase Service
 
-## `Llegenda`
+---
+##### `Llegenda`
 | Simbol | Descripción |
 |:------:|:------------|
 | ✅ | Correctament implementat y funcionant de forma intencional. |
