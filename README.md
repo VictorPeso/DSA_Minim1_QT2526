@@ -21,7 +21,7 @@ Veure la resolució dels tests efectuats al directori "CAPTURAS DE PANTALLA" amb
 |         | titol           | string  |                          |
 |         | editorial       | string  |                          |
 |         | any             | string  |                          |
-|         | num_edicio      | int     |                          |
+|         | num_edicio      | string  |                          |
 |         | autor           | string  |                          |
 |         | temática        | string  |                          |
 |         | exemplars       | int     |                          |
