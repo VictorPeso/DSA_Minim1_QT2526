@@ -1,4 +1,5 @@
 # Minim 1 [QT2526 - 07/11/2025]
+---
 Parte 1:
 - Manager básico
 - Fachada implementada
