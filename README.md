@@ -16,27 +16,27 @@ Veure la resolució dels tests efectuats al directori "CAPTURAS DE PANTALLA" amb
 
 | Clase   | Atributo          | Tipo     | Notas / Errores posibles |
 |---------|-----------------|---------|--------------------------|
-| Llibre  | id              | string  |                          |
-|         | isbn            | string  |                          |
-|         | titol           | string  |                          |
-|         | editorial       | string  |                          |
-|         | any             | string  |                          |
-|         | num_edicio      | string  |                          |
-|         | autor           | string  |                          |
-|         | temática        | string  |                          |
-|         | exemplars       | int     |                          |
-| Lector  | id              | string  | ERROR: No hi ha cap llibre pendent de catalogar. |
-|         | nom             | string  |                          |
-|         | cognom          | string  |                          |
-|         | dni             | string  |                          |
-|         | birthdate       | string  |                          |
-|         | direccio        | string  |                          |
-| Prestac | id              | string  | ERROR: No hi han exemplars |
-|         | id_lector       | string  | ERROR: No existeix el llibre/lector    |
-|         | id_llibre       | string  |                          |
-|         | data_prestec    | string  |                          |
-|         | data_devolucio  | string  |                          |
-|         | estat           | string  | #En tramit; tornat       |
+| Llibre  | id              | `string`  |                          |
+|         | isbn            | `string`  |                          |
+|         | titol           | `string`  |                          |
+|         | editorial       | `string`  |                          |
+|         | any             | `string`  |                          |
+|         | num_edicio      | `string`  |                          |
+|         | autor           | `string`  |                          |
+|         | temática        | `string`  |                          |
+|         | exemplars       | `int`     |                          |
+| Lector  | id              | `string`  | ERROR: No hi ha cap llibre pendent de catalogar. |
+|         | nom             | `string`  |                          |
+|         | cognom          | `string`  |                          |
+|         | dni             | `string`  |                          |
+|         | birthdate       | `string`  |                          |
+|         | direccio        | `string`  |                          |
+| Prestac | id              | `string`  | ERROR: No hi han exemplars |
+|         | id_lector       | `string`  | ERROR: No existeix el llibre/lector    |
+|         | id_llibre       | `string`  |                          |
+|         | data_prestec    | `string`  |                          |
+|         | data_devolucio  | `string`  |                          |
+|         | estat           | `string`  | `En tramit` `Tornat`       |
 
 #### Implementació
 
