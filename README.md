@@ -60,8 +60,8 @@ Totes les captures es troben dintre del directori "CAPTURAS DE PANTALLA"
 | Estat | Nom del fitxer | Descripció |
 |:------:|:-----:|:-----------|
 | ✅ | JUNITtest | Captura de pantalla amb l’execució del test JUNIT de la PART 1. |
-| ❌ | - | Captura de pantalla amb la consola de l’execució del servei REST. |
-| ❌ | - | Captura de pantalla amb l’execució de dues operaciones sobre swagger. |
+| ✅ | RESTservei | Captura de pantalla amb la consola de l’execució del servei REST. |
+| ✅ | ExempleOperacioX_Y | Captures de pantalla amb l’execució de dues operaciones sobre swagger. |
 
 ---
 ##### `Llegenda`
