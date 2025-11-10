@@ -54,6 +54,21 @@ Veure la resolució dels tests efectuats al directori "CAPTURAS DE PANTALLA" amb
 | ❌ |1| Definir servei, operacions, rutes, mètodes HTTP, peticions, respostes, codis de resposta |
 | ❌ |2| Implementar un servei REST que permeti realitzar les operacions especificades a la primera part de l'exercici. |
 
+El servei vindrà definit de la seguent forma:
+| Operacions  | Rutes | Mètode HTTP | Peticions | Codis de resposta | Respostes |
+|:-----------:|:-----:|:-----------:|:---------:|:---------:|:-----------------:|
+| Catalogar un llibre | /Biblio/cataleg | `GET` | - | 200 | Successful |
+|  |  |  |  | 404 | ERROR: No hi han llibres per catalogar. |
+| Afegir un nou lector | /Biblio/lector | `POST` | Lector (body) | 200 | Successful |
+|  |  |  |  | 500 | Validation Error |
+| Emmagatzemar un llibre | /Biblio/llibre | `POST` | Llibre (body) | 200 | Successful |
+|  |  |  |  | 500 | Validation Error |
+| Prestar un llibre | /Biblio/prestac | `POST` | Prestac (body) | 200 | Successful |
+|  |  |  |  | 405 | Validation Error |
+|  |  |  |  | 406 | Validation Error |
+|  |  |  |  | 407 | Validation Error |
+| Consultar tots els préstecs que ha realitzat un lector | /Biblio/prestacs/{id} | `GET` | id (String) | 200 | Successful |
+
 ---
 ##### `Fitxers adjuunts`
 Totes les captures es troben dintre del directori "CAPTURAS DE PANTALLA"
