@@ -21,21 +21,14 @@ public interface BiblioManager {
 
     public List<Prestac> getLLibresByUser(Lector lec);
 
-//    public Llibre addTrack(String id, String title, String singer);
-//    public Llibre addTrack(String title, String singer);
-//    public Llibre addTrack(Llibre t);
-//    public Llibre getTrack(String id);
-//    public Llibre getTrack2(String id) throws EmptyBookListException;
-//
-//    public List<Llibre> findAll();
-//    public void deleteTrack(String id);
-//    public Llibre updateTrack(Llibre t);
-//
     public void clear();
+    public Stack<Llibre> get_munt();
     public int size_munt();
+    public List<Stack<Llibre>> get_biblio();
     public int size_biblio();
     public List<Llibre> get_catalog();
     public int size_catalog();
+    public List<Prestac> get_registre();
     public int size_registre();
     public List<Lector> get_lectors();
     public int size_lectors();

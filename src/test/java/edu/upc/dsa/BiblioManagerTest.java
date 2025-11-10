@@ -92,12 +92,17 @@ public class BiblioManagerTest {
 
         Assert.assertEquals(0, bm.size_catalog());
 
-        Assert.assertThrows(EmptyBookListException.class, () -> this.bm.saveLlibre());
+        this.bm.saveLlibre();
 
         // Hi han 8 llibres diferents, per tant el cataleg ha de tindre aqeusta dimensió.
         Assert.assertEquals(8, bm.size_catalog());
         // "Twenty Thousand Leagues Under the Sea" ha de tindre 3 exemplars.
         Assert.assertEquals(3, bm.get_catalog().get(0).getExemplars());
+
+        // Ara que no queden llibres per catalogar tornarem a executar la comanda per veure si salta l'error.
+        this.bm.get_biblio().clear();
+        this.bm.get_munt().clear();
+        Assert.assertThrows(EmptyBookListException.class, () -> this.bm.saveLlibre());
 
         logger.info("******************************************");
     }
@@ -108,7 +113,7 @@ public class BiblioManagerTest {
         logger.info("   ----- PRESTAR UN LLIBRE -----");
 
         logger.info(" -> Primer enregistrar els llibres:");
-        Assert.assertThrows(EmptyBookListException.class, () -> this.bm.saveLlibre());
+        this.bm.saveLlibre();
         Assert.assertEquals(0, bm.size_registre());
         logger.info(("........................................."));
 
@@ -142,7 +147,7 @@ public class BiblioManagerTest {
 
         logger.info(" -> Set up:");
         this.bm.addLector("112", "Marta", "Gonzalez Martinez", "47463829T", "11/11/2001", "Castelldefels");
-        Assert.assertThrows(EmptyBookListException.class, () -> this.bm.saveLlibre());
+        this.bm.saveLlibre();
         Assert.assertNotNull("Prestec efectuat correctament", this.bm.doPrestac("", "111", "JV1", "07/11/2025", "07/12/2025"));
         Assert.assertNotNull("Prestec efectuat correctament", this.bm.doPrestac("", "111", "JV3", "07/11/2025", "07/12/2025"));
         Assert.assertNotNull("Prestec efectuat correctament", this.bm.doPrestac("", "111", "JV5", "07/11/2025", "07/12/2025"));

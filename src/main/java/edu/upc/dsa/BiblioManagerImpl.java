@@ -36,7 +36,7 @@ public class BiblioManagerImpl implements BiblioManager {
         return instance;
     }
 
-    public Lector addLector(String id, String nom, String cognoms, String dni, String birthdate, String direccio){
+    public Lector addLector(String id, String nom, String cognoms, String dni, String birthdate, String direccio) {
         Lector l = new Lector(id, nom, cognoms, dni, birthdate, direccio);
         this.lectors.add(l);
         logger.info("LECTOR NOU: " + l);
@@ -83,12 +83,16 @@ public class BiblioManagerImpl implements BiblioManager {
     }
 
     public void saveLlibre() throws EmptyBookListException {
-        for (Stack<Llibre> m : this.biblio) {
-            catalogar_munt(m);
+        if ((this.munt.isEmpty()) && (this.biblio.isEmpty())) {
+            throw new EmptyBookListException("No hi ha llibres per enregistrar.");
         }
-        catalogar_munt(this.munt);
-        logger.info("S'ha acabat d'enrregistrar els llibres");
-        throw new EmptyBookListException("Fi de l'enrregistrament");
+        else {
+            for (Stack<Llibre> m : this.biblio) {
+                catalogar_munt(m);
+            }
+            catalogar_munt(this.munt);
+            logger.info("S'ha acabat d'enrregistrar els llibres");
+        }
     }
 
     public Prestac doPrestac(String id, String lector, String llibre, String data_prestac, String data_devolucio) throws CantDoPrestacException {
@@ -130,7 +134,6 @@ public class BiblioManagerImpl implements BiblioManager {
             p = null;
             throw new CantDoPrestacException("Llibre no disponible.");
         }
-
         return p;
     }
 
@@ -191,78 +194,15 @@ public class BiblioManagerImpl implements BiblioManager {
         return this.lectors;
     }
 
-//    public Llibre addTrack(Llibre t) {
-//        logger.info("new Track " + t);
-//
-//        this.munt.add (t);
-//        logger.info("new Track added");
-//        return t;
-//    }
-//
-//    public Llibre addTrack(String title, String singer){
-//        return this.addTrack(null, title, singer);
-//    }
-//
-//
-//    public Llibre getTrack(String id) {
-//        logger.info("getTrack("+id+")");
-//
-//        for (Llibre t: this.munt) {
-//            if (t.getId().equals(id)) {
-//                logger.info("getTrack("+id+"): "+t);
-//
-//                return t;
-//            }
-//        }
-//
-//        logger.warn("not found " + id);
-//        return null;
-//    }
-//
-//    public Llibre getTrack2(String id) throws EmptyBookListException {
-//        Llibre t = getTrack(id);
-//        if (t == null) throw new EmptyBookListException();
-//        return t;
-//    }
-//
-//
-//    public List<Llibre> findAll() {
-//        return this.munt;
-//    }
-//
-//    @Override
-//    public void deleteTrack(String id) {
-//
-//        Llibre t = this.getTrack(id);
-//        if (t==null) {
-//            logger.warn("not found " + t);
-//        }
-//        else logger.info(t+" deleted ");
-//
-//        this.munt.remove(t);
-//
-//    }
-//
-//    @Override
-//    public Llibre updateTrack(Llibre p) {
-//        Llibre t = this.getTrack(p.getId());
-//
-//        if (t!=null) {
-//            logger.info(p+" rebut!!!! ");
-//
-//            t.setAutor(p.getAutor());
-//            t.setTitle(p.getTitle());
-//
-//            logger.info(t+" updated ");
-//        }
-//        else {
-//            logger.warn("not found "+p);
-//        }
-//
-//        return t;
-//    }
-//
-//    public void clear() {
-//        this.munt.clear();
-//    }
+    public Stack<Llibre> get_munt() {
+        return this.munt;
+    }
+
+    public List<Stack<Llibre>> get_biblio() {
+        return this.biblio;
+    }
+
+    public List<Prestac> get_registre() {
+        return this.registre;
+    }
 }

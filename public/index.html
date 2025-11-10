@@ -1,3 +1,92 @@
-<h1>Hello</h1>
-<p>World</p>
-<img src="espinete.jpg">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>MÍNIM 1 - Minim1.2025Tardor</title>
+    <style>
+        body { font-family: Arial, Helvetica, sans-serif; line-height:1.5; margin: 2rem; color: #111; }
+        header { border-bottom: 2px solid #ddd; margin-bottom: 1rem; padding-bottom: 0.5rem; }
+        h1 { font-size: 1.6rem; margin: 0; }
+        h2 { color: #333; margin-top: 1.2rem; }
+        p { margin: 0.6rem 0; }
+        ul { margin: 0.4rem 0 0.8rem 1.2rem; }
+        .note { background: #f8f8f8; padding: .6rem; border-left: 4px solid #ccc; }
+        .foot { font-size: 0.9rem; color: #444; margin-top: 1.2rem; }
+        pre { background:#f5f5f5; padding:1rem; overflow:auto; }
+    </style>
+</head>
+<body>
+<header>
+    <h1>MÍNIM 1</h1>
+</header>
+
+<p>Els prestigiosos estudiants de Telemàtica de l'Escola d'Enginyeria de Telecomunicació i Aeroespacial de Castelldefels (EETAC), reconeguts arreu per la seva habilitat innata digitalitzar processos complexos han rebut l'encàrrec de dissenyar i implementar un sistema informàtic per a la gestió d’una biblioteca per entorns rurals.</p>
+
+<p>Tots els llibres que arriben són dipositats al magatzem de la biblioteca abans de la seva posterior catalogació. Volen a més que la gestió de préstec de llibres es faci amb recursos tecnològics moderns, deixant a un costat els tradicionals mètodes "rurals" d'administració en paper.</p>
+
+<h2>Procediment de catalogació</h2>
+<p>El procediment de catalogació és el següent: primerament els llibres són dipositats al magatzem en munts de 10. S’ha comprovat que munts més alts tenen el risc d’ensorrar-se, per la qual cosa s’ha establert aquest nombre com una quantitat òptima. El nombre de munts és desconegut, simplement es va creant un nou munt amb els nous llibres que van arribant al darrera del darrer munt format.</p>
+
+<p>Per crear un nou munt, els llibres es van apilant un damunt l'altre fins a arribar a la quantitat de 10, moment en què aquest munt estarà complet. Els munts es tracten en l’ordre d’arribada, és a dir, primer es cataloguen els llibres del primer munt creat, després els del segon i així successivament. Dins de cada munt, els llibres es cataloguen en ordre invers en què s’ha creat el munt, és a dir, el primer llibre que es cataloga serà l’últim que es va posar en aquest munt, el que està a la part més amunt, el segon que es catalogarà serà el penúltim posat, etc.</p>
+
+<h2>Operacions a desenvolupar</h2>
+<ul>
+    <li><strong>Afegir un nou lector.</strong> De cada lector es coneix el seu identificador, el seu nom, els seus cognoms, el seu dni, la seva data de naixement, el seu lloc de naixement i la seva adreça. Si hi ha un lector amb aquest identificador s'actualitzen les seves dades.</li>
+
+    <li><strong>Emmagatzemar un llibre.</strong> S’emmagatzema un nou llibre en l’estructura de llibres emmagatzemats. De cada llibre se'n coneix l’identificador, el seu ISBN, el seu títol, el seu editorial, el seu any de publicació, el seu número d'edició, el seu autor i la seva temàtica. El llibre s'apila en l'últim munt si aquest té menys de 10 llibres apilats. En cas contrari es crea un nou munt buit i s'hi apila el llibre.</li>
+
+    <li><strong>Catalogar un llibre.</strong> S'extreu el llibre apilat a la part més alta del primer munt actual. Si el munt queda buit el següent llibre que s’extraurà serà el que estigui a la part més alta del següent munt que passa a ser el munt actual. Si ja existeix un llibre amb el mateix ISBN al contenidor de llibres catalogats, no es crea un nou element, sinó que s’incrementa la quantitat d’exemplars disponibles d’aquest llibre. Si no hi ha cap llibre pendent de catalogar s’indica un error.</li>
+
+    <li><strong>Prestar un llibre.</strong> De cada préstec es coneix l’identificador del préstec, l’identificador del lector, l’identificador del llibre catalogat, la data de préstec i la data final de devolució. El nombre d’exemplars del llibre disponibles es decrementa en una unitat. El préstec es marca com "En tràmit". Si no existeixen exemplars suficients del llibre s’indica un error. Si el lector o el llibre no existeixen s’indica un error.</li>
+
+    <li><strong>Consultar tots els préstecs que ha realitzat un lector.</strong> Se sap per endavant que l'identificador del lector existeix.</li>
+</ul>
+
+<h2>ES DEMANA:</h2>
+
+<h3>PART I: 5 punts</h3>
+<ol>
+    <li>Identificar les entitats d'informació i les seves propietats. Podeu fer una proposta bàsica de classes i d'atributs.</li>
+    <li>Especificació del component que implementarà les operacions descrites anteriorment: interfície Java.</li>
+    <li>Implementació d'una Façana (patró de disseny) que implementi la interfície definida prèviament.
+        <ol type="a">
+            <li>Elecció de les estructures de dades.</li>
+            <li>La façana s'ha d'implementar com un Singleton.</li>
+            <li>Tots els mètodes han de tenir una TRAÇA (a nivell d'INFO) amb LOG4J que mostri el valor dels paràmetres a l'inici i al final dels mètodes. També s'han de contemplar traces d'altres nivells (ERROR o FATAL).</li>
+        </ol>
+    </li>
+    <li>Implementació d'una prova (JUNIT) sobre el component desenvolupat.</li>
+</ol>
+
+<h3>PART II: 5 punts</h3>
+<ol>
+    <li>Definir (servei, operacions, rutes, mètodes HTTP, peticions, respostes, codis de resposta) i implementar un servei REST que permeti realitzar les operacions especificades a la primera part de l'exercici. Es recomana que totes les operacions retornin objectes de transferència i evitar cicles/relacions. Si aquests objectes de transferència són complexos, es complica la serialització/deserialització. El servei ha d'utilitzar el component construït en el punt anterior.</li>
+</ol>
+
+<h2>Lliurament</h2>
+<p>El lliurament consistirà en un arxiu .ZIP que contingui:</p>
+<ul>
+    <li>fitxer de text que contingui l'enllaç al repositori de GitHub.</li>
+    <li>captura de pantalla amb l’execució del test JUNIT de la primera part.</li>
+    <li>captura de pantalla amb la consola de l’execució del servei REST</li>
+    <li>captura de pantalla amb l’execució de dues operaciones sobre swagger.</li>
+</ul>
+
+<div class="note">
+    <p><strong>NOTA:</strong></p>
+    <ul>
+        <li>El professorat resoldrà qualsevol dubte conceptual de l'enunciat.</li>
+        <li>El professorat NO resoldrà dubtes tècnics ni problemes amb eines com IntelliJ, GIT, MVN, etc.</li>
+        <li>No es permet l'ús de System.out.println.</li>
+        <li>La gestió de dependències (llibreries) s'ha de realitzar exclusivament amb Maven: JUnit, Log4j, etc.</li>
+        <li>El lliurament s'ha de fer en un repositori de GitHub. En aquest repositori s'ha d'incloure un fitxer README.md que descrigui el projecte: el seu estat actual, errors o problemes trobats, i aspectes pendents de desenvolupament. S'ha d'indicar quines parts estan desenvolupades i funcionant, i quines no.</li>
+        <li>No s'ha de fer cap push fins a finalitzar l'exercici per evitar compartir el codi entre companys. Si es detecta un alt percentatge de similituds en el codi, el cas es presentarà al cap d'estudis amb la proposta de suspens global de l'assignatura.</li>
+        <li>Encara que no està prohibit l'ús de la IA generativa, s'ha de fer amb bon criteri. Si no és el cas, es penalitzarà. El criteri per avaluar-ho es basa en tenir un sentit crític del que ha proporcionat la IA i no limitar-se a copiar i enganxar codi sense entendre el seu funcionament.</li>
+    </ul>
+</div>
+
+<p class="foot">(Victor Peso Keyer EETAC - DSA - QT2526)</p>
+
+</body>
+</html>
