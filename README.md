@@ -51,8 +51,8 @@ Veure la resolució dels tests efectuats al directori "CAPTURAS DE PANTALLA" amb
 ## `Part 2`
 | Estat | Apartat | Descripció |
 |:-----:|:---:|:-----------|
-| ❌ |1| Definir servei, operacions, rutes, mètodes HTTP, peticions, respostes, codis de resposta |
-| ❌ |2| Implementar un servei REST que permeti realitzar les operacions especificades a la primera part de l'exercici. |
+| ✅ |1| Definir servei, operacions, rutes, mètodes HTTP, peticions, respostes, codis de resposta |
+| ✅ |2| Implementar un servei REST que permeti realitzar les operacions especificades a la primera part de l'exercici. |
 
 El servei vindrà definit de la seguent forma:
 | Operacions  | Rutes | Mètode HTTP | Peticions | Codis de resposta | Respostes |
